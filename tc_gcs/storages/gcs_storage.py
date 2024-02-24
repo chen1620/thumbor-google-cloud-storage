@@ -128,14 +128,9 @@ class Storage(GCSStorage, BaseStorage):
         Gets data at path
         :param string path: Path for data
         """
+        buffer = await super(Storage, self).get(path)
+        return buffer
 
-        try:
-            file = await super(Storage, self).get(path)
-        except Exception:
-            return None
-
-        async with file['Body'] as stream:
-            return await stream.read()
 
     async def exists(self, path):
         """

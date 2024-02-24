@@ -33,7 +33,7 @@ class Bucket(object):
         :param path: The path to get the object from
         """
         blob = self._bucket.blob(path)
-        return blob.download_as_string()
+        return blob.download_as_bytes()
     
     async def get_signed_url(self, path, method='GET', expiration=3600):
         """
