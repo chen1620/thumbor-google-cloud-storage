@@ -94,15 +94,12 @@ class Storage(GCSStorage, BaseStorage):
         crypto_path = "%s.txt" % (splitext(file_abspath)[0])
 
         try:
-            file_key = await self.storage.get(crypto_path)
+            buffer = await self.storage.get(crypto_path)
         except Exception as err:
-            logger.warn("[STORAGE] gcs blob not found at %s" % crypto_path)
+            logger.warn("[STORAGE] gcs blob not found at %s: %s" % crypto_path, err)
             return None
 
-        async with file_key['Body'] as stream:
-            file_key = await stream.read()
-
-        return file_key.decode('utf-8')
+        return buffer.decode('utf-8')
 
     async def get_detector_data(self, path):
         """
@@ -113,22 +110,26 @@ class Storage(GCSStorage, BaseStorage):
         path = '%s.detectors.txt' % splitext(file_abspath)[0]
 
         try:
-            file_key = await self.storage.get(path)
+            buffer = await self.storage.get(path)
         except Exception:
             return None
 
-        if not file_key or self.is_expired(file_key) or 'Body' not in file_key:
+        if not buffer or self.is_expired(buffer):
             return None
 
-        async with file_key['Body'] as stream:
-            return loads(await stream.read())
+        return loads(buffer)
 
     async def get(self, path):
         """
         Gets data at path
         :param string path: Path for data
         """
-        buffer = await super(Storage, self).get(path)
+        try:
+            buffer = await super(Storage, self).get(path)
+        except Exception:
+            return None
+        if not buffer or self.is_expired(buffer):
+            return None
         return buffer
 
 
