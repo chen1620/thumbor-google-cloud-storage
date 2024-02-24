@@ -3,7 +3,7 @@ from os.path import join
 from datetime import datetime
 from dateutil.tz import tzutc
 
-from . import Bucket
+from .bucket import Bucket
 
 class GCSStorage():
     """Google Cloud Storage (GCS) storage backend."""
