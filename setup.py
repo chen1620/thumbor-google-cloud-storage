@@ -21,6 +21,7 @@ setup(
     author_email='nhatns.uet@gmail.com',
     description='A simple Thumbor custom storage for Google Cloud Storage',
     long_description=readme(),
+    long_description_content_type='text/markdown',
     license='MIT',
     keywords='thumbor gcs google cloud storage',
     classifiers=[
