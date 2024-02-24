@@ -6,7 +6,7 @@ The thumbor storage can be customized as follows: [Storages](https://thumbor.rea
 
 ## Installation
 ```
-pip install tc_gcs
+pip install tc-gcs
 ```
 
 ## Authentiation

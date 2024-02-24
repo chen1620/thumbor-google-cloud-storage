@@ -17,7 +17,7 @@ class Storage(GCSStorage, BaseStorage):
         """
         BaseStorage.__init__(self, context)
         GCSStorage.__init__(self, context, 'TC_GCS_STORAGE')
-        self.storage_expiration_seconds = self._get_config('STORAGE_EXPIRATION_SECONDS', 60 * 60)
+        self.storage_expiration_seconds = context.config.get('STORAGE_EXPIRATION_SECONDS', 3600)
 
     async def put(self, path, file_bytes):
         """
