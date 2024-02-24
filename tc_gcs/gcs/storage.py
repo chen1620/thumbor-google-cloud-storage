@@ -3,7 +3,7 @@ from os.path import join
 from datetime import datetime
 from dateutil.tz import tzutc
 
-from . import Bucket
+from .bucket import Bucket
 
 class GCSStorage():
     """Google Cloud Storage (GCS) storage backend."""
@@ -103,7 +103,7 @@ class GCSStorage():
 
         return normalized_path
 
-    def _should_radomize_key(self):
+    def _should_randomize_key(self):
         """
         Determine if the storage backend should randomize the image key.
         :return: True if the storage backend should randomize the image key, False otherwise.

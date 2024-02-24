@@ -8,14 +8,14 @@ class Bucket(object):
     """
     This handles the bucket operations
     """
-    def __init__(self, project_id, bucket_id, retry=None):
+    def __init__(self, project_id, bucket_id):
         """
         Constructor for the Bucket class
         :param project_id: The project ID of the Google Cloud project
         :param bucket_id: The bucket ID of the Google Cloud Storage bucket
         :param retry: The retry object to use for the client
         """
-        self._client = storage.Client(project=project_id, retry=retry)
+        self._client = storage.Client(project=project_id)
         self._bucket = self._client.get_bucket(bucket_id)
 
     

@@ -17,7 +17,7 @@ class Storage(GCSStorage, BaseStorage):
         """
         BaseStorage.__init__(self, context)
         GCSStorage.__init__(self, context, 'TC_GCS_STORAGE')
-        self.storage_expiration_seconds = self._get_config('STORAGE_EXPIRATION_SECONDS', 60 * 60)
+        self.storage_expiration_seconds = context.config.get('STORAGE_EXPIRATION_SECONDS', 3600)
 
     async def put(self, path, file_bytes):
         """
@@ -26,10 +26,10 @@ class Storage(GCSStorage, BaseStorage):
         :param file_bytes: The image data to put at the given path.
         """
         try:
-            await self.storage._put(self._normalize_path(path), file_bytes)
+            await self._put(self._normalize_path(path), file_bytes)
         except Exception as e:
             logger.exception('Could not upload image %s to GCS: %s', path, e)
-        return None
+            return None
         
         return path
 
